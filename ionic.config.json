@@ -1,0 +1,7 @@
+{
+  "name": "kilemba",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
