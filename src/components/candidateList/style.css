@@ -1,0 +1,27 @@
+.flex{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+.heigth{
+	height: 24px;
+}
+.submitBotton{
+	text-align: center;
+	background: darkorchid;
+}
+.titleHouse{
+  font-size: 20px;
+  font-weight: 600;
+}
+.itemMenu{
+	background: darkorchid;
+}
+.hoverColor{
+	transition: background-color 0.3s;
+		background: #3b5998;
+}
+
+.hoverColor:hover{
+	background-color: darkorchid;
+}
