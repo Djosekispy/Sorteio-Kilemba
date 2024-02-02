@@ -21,7 +21,15 @@ import {
   person,
   chevronExpandOutline,
 } from 'ionicons/icons';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword, 
+  sendEmailVerification, 
+ GoogleAuthProvider, 
+signInWithPopup,
+signInWithRedirect,
+FacebookAuthProvider
+ } from "firebase/auth";
+
 import {
   doc,
   setDoc,
@@ -31,6 +39,11 @@ import {
 } from 'firebase/firestore';
 import { auth, db } from '../../services/firebase';
 import ModalTrue from '../../components/modalTrue/index';
+
+const providerGoogle = new GoogleAuthProvider();
+const providerFacebook = new FacebookAuthProvider();
+
+
 
 type UserProps = {
   nome: string;
@@ -80,7 +93,7 @@ export default function Signup() {
         password: user.uid,
         createdAt: serverTimestamp(),
       });
-
+   await sendEmailVerification(user);
       setSend(true);
     } catch (err) {
       console.error('Error creating user:', err);
@@ -89,6 +102,39 @@ export default function Signup() {
       setIsLoading(false);
     }
   };
+
+const entrarComGoogle = () => signInWithPopup(auth, providerGoogle)
+  .then((result) => {
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential?.accessToken;
+    const user = result.user;
+  }).catch((error) => {
+    
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  
+    const email = error.customData.email;
+  
+    const credential = GoogleAuthProvider.credentialFromError(error);
+  
+  });
+
+const entrarComFacebook = () => signInWithPopup(auth, providerFacebook)
+  .then((result) => {
+    const user = result.user;
+    const credential = FacebookAuthProvider.credentialFromResult(result);
+    const accessToken = credential?.accessToken;
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    const email = error.customData.email;
+    const credential = FacebookAuthProvider.credentialFromError(error);
+  });
+
+
+
+
 
   return (
     <IonPage>
@@ -103,7 +149,7 @@ export default function Signup() {
                   alt="Phone image"
                 />
               </div>
-              <p className="text-center h1 fw-bold mb-3 mx-1 mx-md-8 mt-4">
+              <p className="text-center text-dark h1 fw-bold mb-3 mx-1 mx-md-8 mt-4">
                 Registrar
               </p>
               {send && (
@@ -115,7 +161,7 @@ export default function Signup() {
               )}
               {error && (
                 <ModalTrue
-                  href="/signup"
+                  href="/singnup"
                   content="Houve um erro ao tentar fazer o cadastro! Verifique sua conexão com a internet ou tente novamente mais tarde."
                   title="Erro no Cadastro"
                 />
@@ -128,7 +174,7 @@ export default function Signup() {
                 >
                   {/* Form inputs */}
                   <div className="d-flex flex-row align-items-center mb-0">
-                    <IonIcon icon={person} style={{fontSize: '24px'}} className='me-3'/>
+                    <IonIcon icon={person} style={{fontSize: '24px'}} color='black' className='me-3'/>
                     <div className="form-outline flex-fill mb-0">
                       <input {...register("nome")} placeholder='Nome Completo' id="form3Example1c" className="form-control" />
                     </div>
@@ -146,7 +192,11 @@ export default function Signup() {
                      <IonIcon icon={keyOutline} style={{fontSize: '24px'}} className='me-3'/>
                     <div className="form-outline flex-fill mb-0">
                     
-                      <input {...register("senha")} placeholder='Senha' id="form3Example4c" className="form-control" />
+                      <input {...register("senha")}
+                       placeholder='Senha' 
+                       id="form3Example4c"
+                       type="password"
+                        className="form-control" />
                      
                     </div>
                   </div>
@@ -156,7 +206,7 @@ export default function Signup() {
                     <IonIcon icon={keyOutline} style={{fontSize: '24px'}} className='me-3'/>
                     <div className="form-outline flex-fill mb-0">
                      
-                      <input {...register("Confirmsenha")} placeholder='Repita sua senha' id="form3Example4cd" className="form-control" />
+                      <input {...register("Confirmsenha")} type="password" placeholder='Repita sua senha' id="form3Example4cd" className="form-control" />
                      
                     </div>
                   </div>
@@ -165,7 +215,7 @@ export default function Signup() {
 
  <div className="form-check d-flex justify-content-center mb-5">
                     <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                    <label className="form-check-label">
+                    <label className="form-check-label text-dark">
                       Eu concordo com todos os <a href="#!">Termos & Condições</a>
                     </label>
                   </div>
@@ -173,7 +223,7 @@ export default function Signup() {
                   <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <button
                       type="submit"
-                      className="btn btn-primary btn-lg"
+                      className="btn btn-primary btn-sm"
                       disabled={isLoading}
                     >
                       {isLoading ? 'Cadastrando...' : 'Cadastrar'}
@@ -182,14 +232,19 @@ export default function Signup() {
 
                   {/* Social media buttons */}
                   <div className="text-center text-dark my-4">
-                    <p>Registrar-se com o:</p>
-                      <button type="button" className="btn btn-primary btn-floating mx-1">
+                    <p>Entar com o:</p>
+                      <span 
+                      onClick={()=>entrarComFacebook()}
+                       className="btn btn-primary btn-floating mx-1">
+                      
                   <IonIcon icon={logoFacebook} className='text-dark mx-2' />
-                </button>
+                </span>
 
-                <button type="button" className="btn bg-danger btn-floating mx-1">
+                <span 
+                onClick={()=>entrarComGoogle()}
+                className="btn bg-danger btn-floating mx-1">
                  <IonIcon icon={logoGoogle} className='text-dark mx-2' />
-                </button>
+                </span>
                   </div>
                 </form>
               </div>

@@ -1,7 +1,14 @@
 import { IonButton, IonIcon } from '@ionic/react';
 import { menu } from 'ionicons/icons';
 import Cronometer from '../cronometer/index'; 
+import {auth} from '../../services/firebase';
+
+
+
 export default function Menu(){
+
+  const getAdmin = auth?.currentUser?.email;
+
 	return (
     <>
 <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -15,24 +22,27 @@ export default function Menu(){
         <li className="nav-item">
           <a className="nav-link active" aria-current="page" href="/">Inicio</a>
         </li>
-        <li className="nav-item">
-          <a className="nav-link" href="/candidatura">Inscrever-se</a>
+        {
+          getAdmin === 'globof129@gmail.com' ?  <li className="nav-item">
+          <a className="nav-link" href="/painel">Painel de Controle</a>
         </li>
-        <li className="nav-item">
-          <a className="nav-link" href="/">Meu Perfil</a>
+        :
+         <li className="nav-item">
+          <a className="nav-link" href="/candidatar/user">Candidatura</a>
         </li>
+        }
         <li className="nav-item dropdown">
           <a className="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Sorteiados
           </a>
           <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="/listagem">Apartamentos</a></li>
-            <li><a className="dropdown-item" href="/listagem">Vivendas Geminadas</a></li>
-            <li><a className="dropdown-item" href="/listagem">Vivendas Insoladas</a></li>
+            <li><a className="dropdown-item" href="/apartamentos">Apartamentos</a></li>
+            <li><a className="dropdown-item" href="/geminadas">Vivendas Geminadas</a></li>
+            <li><a className="dropdown-item" href="/insoladas">Vivendas Insoladas</a></li>
           </ul>
         </li>
             <li className="nav-item">
-          <a className="nav-link" href="/">logout</a>
+            <a className="nav-link" href="/logout">Terminar sessão</a>
         </li>
       </ul>
     </div>

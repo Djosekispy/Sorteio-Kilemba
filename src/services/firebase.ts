@@ -1,19 +1,20 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, RecaptchaVerifier,signInWithPhoneNumber} from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getAuth} from "firebase/auth";
+import { getStorage, ref } from "firebase/storage";
+import {getFirestore} from 'firebase/firestore';
+
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAtLq80MuX937AbGJQw82_qwbwXsmVduCI",
-  authDomain: "sorteio-13df5.firebaseapp.com",
-  projectId: "sorteio-13df5",
-  storageBucket: "sorteio-13df5.appspot.com",
-  messagingSenderId: "517479363665",
-  appId: "1:517479363665:web:c3f1c2b3945f4848507470"
+  apiKey: "AIzaSyBsQ3339Z_UadiOsKsPGdOp0LHEuMqsOEU",
+  authDomain: "kilemba-df33a.firebaseapp.com",
+  projectId: "kilemba-df33a",
+  storageBucket: "kilemba-df33a.appspot.com",
+  messagingSenderId: "877784344083",
+  appId: "1:877784344083:web:da5492792babbf52f3c1e6"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
-
-
+export const storage = getStorage(app);

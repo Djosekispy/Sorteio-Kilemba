@@ -87,7 +87,7 @@
 }
 
 .card .table {
-    padding: 3px 30px;
+    padding: 15px 30px;
 }
 
 .card .table-primary {
@@ -152,7 +152,7 @@
 /* ============ Card Blog ============ */
 
 .card-blog {
-    margin-top: 5px;
+    margin-top: 30px;
 }
 
 .card-blog .card-caption {
@@ -160,7 +160,7 @@
 }
 
 .card-blog .card-image + .category {
-    margin-top: 5px;
+    margin-top: 20px;
 }
 
 .card-raised {
@@ -305,7 +305,7 @@
 
 .card-testimonial {
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 60px;
     text-align: center;
 }
 
