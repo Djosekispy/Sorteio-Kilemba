@@ -49,7 +49,7 @@ Diagrama de Arquitetura: criando ...
 
 **Documentação Adicional:**
 
-* Documentação do Ionic React: [<Aqui>](https://ionicframework.com/docs)
+* Documentação do Ionic React: [https://ionicframework.com/docs](https://ionicframework.com/docs)
 * Documentação do Firebase: [https://firebase.google.com/docs/](https://firebase.google.com/docs/)
 * Documentação do Firebase Cloud Functions: [https://firebase.google.com/docs/functions/](https://firebase.google.com/docs/functions/)
 
